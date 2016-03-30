@@ -2,11 +2,6 @@
 Hull University Graphics Helper (HUGH) Build System
 ===================================================
 
-.. image:: https://travis-ci.org/regnirpsj/hugh-support.svg?branch=master
-   :target: https://travis-ci.org/regnirpsj/hugh-support
-.. image:: https://coveralls.io/repos/github/regnirpsj/hugh-support/badge.svg?branch=master
-   :target: https://coveralls.io/github/regnirpsj/hugh-support?branch=master 
-
 :Author: Jan P Springer <regnirpsj@gmail.com>
 
 .. contents::
