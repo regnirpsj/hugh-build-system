@@ -33,21 +33,21 @@
 #   XSDCXX_ROOT_DIR - Preferred installation prefix
 #                     this can be supplied before calling the module or as an environment variable.
 
-set(_xsdcxx_ENV_ROOT_DIR "$ENV{XSDCXX_ROOT_DIR}")
+set(_xsdcxx_ENV_ROOT_DIR $ENV{XSDCXX_ROOT_DIR})
 
 if(NOT XSDCXX_ROOT_DIR AND _xsdcxx_ENV_ROOT_DIR)
-  set(XSDCXX_ROOT_DIR "${_xsdcxx_ENV_ROOT_DIR}")
+  set(XSDCXX_ROOT_DIR ${_xsdcxx_ENV_ROOT_DIR})
 endif()
 
 set(_xsdcxx_COMPILER_NAMES
-  "xsdcxx"
-  "xsd"
+  xsdcxx
+  xsd
   )
 
 set(_xsdcxx_COMPILER_PATHS
-  "/usr/bin"
-  "usr/local/bin"
-  "${XSDCXX_ROOT_DIR}/bin"
+  /usr/bin
+  usr/local/bin
+  ${XSDCXX_ROOT_DIR}/bin
   )
 
 find_program(XSDCXX_COMPILER
@@ -56,12 +56,12 @@ find_program(XSDCXX_COMPILER
 	     DOC   "The location of the xsd-to-cxx xompiler")
 
 set(_xsdcxx_HEADER_SEARCH_DIRS
-    "/usr/include"
-    "/usr/local/include"
-    "${XSDCXX_ROOT_DIR}/include")
+    /usr/include
+    /usr/local/include
+    ${XSDCXX_ROOT_DIR}/include)
 
 find_path(XSDCXX_INCLUDE_DIRS
-          NAMES "xsd/cxx/config.hxx"
+          NAMES xsd/cxx/config.hxx
           HINTS ${_xsdcxx_HEADER_SEARCH_DIRS}
           DOC   "The directory where <xsd/cxx/config.hxx> resides")
 list(REMOVE_DUPLICATES XSDCXX_INCLUDE_DIRS)
@@ -76,8 +76,7 @@ if(XSDCXX_FOUND AND VERBOSE)
   message(STATUS "XSDCXX setup:\n"
     "   XSDCXX_ROOT_DIR     = ${XSDCXX_ROOT_DIR}\n"
     "   XSDCXX_COMPILER     = ${XSDCXX_COMPILER}\n"
-    "   XSDCXX_INCLUDE_DIRS = ${XSDCXX_INCLUDE_DIRS}"
-    )
+    "   XSDCXX_INCLUDE_DIRS = ${XSDCXX_INCLUDE_DIRS}")
 endif()
 
 # .rst:
@@ -112,20 +111,20 @@ function(xsd_compile CXX_SRC CXX_INC)
   list(APPEND XSD_OPTIONS --hxx-suffix .hpp)
 
   set(${CXX_SRC})
-  set(${CXX_INC} "${CMAKE_CURRENT_BINARY_DIR}")
+  set(${CXX_INC} ${CMAKE_CURRENT_BINARY_DIR})
 
   foreach(file_xsd ${XSD_SOURCES})
     get_filename_component(path_xsd     ${file_xsd} PATH)
     get_filename_component(base_xsd     ${file_xsd} NAME_WE)
     get_filename_component(file_xsd_abs ${file_xsd} ABSOLUTE)
 
-    set(file_cxx "${CMAKE_CURRENT_BINARY_DIR}/${base_xsd}.cpp")
-    set(file_hxx "${CMAKE_CURRENT_BINARY_DIR}/${base_xsd}.hpp")
+    set(file_cxx ${CMAKE_CURRENT_BINARY_DIR}/${base_xsd}.cpp)
+    set(file_hxx ${CMAKE_CURRENT_BINARY_DIR}/${base_xsd}.hpp)
 
-    list(APPEND ${CXX_SRC} "${file_cxx}")
+    list(APPEND ${CXX_SRC} ${file_cxx})
 
     add_custom_command(
-      OUTPUT   "${file_cxx}" "${file_hxx}"
+      OUTPUT   ${file_cxx} ${file_hxx}
       COMMAND  ${XSDCXX_COMPILER}
       ARGS     ${XSD_OPTIONS} ${file_xsd_abs}
       DEPENDS  ${file_xsd}

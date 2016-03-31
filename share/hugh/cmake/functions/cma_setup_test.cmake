@@ -41,14 +41,14 @@ function(cma_setup_test TST_PREFIX)
   set(TST_TESTS)
   
   set(BOOSTTEST_ARGS)
-  # list(APPEND BOOSTTEST_ARGS "--random=1") # randomized execution order
+  list(APPEND BOOSTTEST_ARGS "--random=1") # randomized execution order
   if(TST_DEBUG OR VERBOSE)
     # list(APPEND BOOSTTEST_ARGS "--report_level=detailed")
     # list(APPEND BOOSTTEST_ARGS "--log_level=message")
   endif()
 
   foreach(APP ${TST_SOURCES})
-    get_filename_component(EXE "test_${TST_PREFIX}_${APP}" NAME_WE)
+    get_filename_component(EXE test_${TST_PREFIX}_${APP} NAME_WE)
     add_executable(${EXE} EXCLUDE_FROM_ALL ${APP} ${TST_ADDITIONAL})
 
     if(TST_WINRT)
@@ -59,7 +59,7 @@ function(cma_setup_test TST_PREFIX)
     add_test(${EXE} ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${EXE} ${BOOSTTEST_ARGS})
     list(APPEND TST_EXES ${EXE})
     
-    get_filename_component(TEST "unit_test_${TST_PREFIX}_${APP}" NAME_WE)
+    get_filename_component(TEST unit_test_${TST_PREFIX}_${APP} NAME_WE)
     add_custom_target(${TEST} COMMAND ${EXE} DEPENDS ${EXE} SOURCES ${APP} ${TST_ADDITIONAL})
     list(APPEND TST_TESTS ${TEST})
 

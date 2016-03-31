@@ -16,11 +16,11 @@ if(${PROJECT_NAME}_BLD_UTEST)
       message(STATUS "Enabling CTest unit-test execution")
     endif()
     enable_testing()
-    set(FNAME "CTestConfig.cmake.in")
-    if(NOT EXISTS "cmake/${FNAME}")
-      set(FNAME "${CMAKE_CURRENT_LIST_DIR}/${FNAME}")
+    set(FNAME CTestConfig.cmake.in)
+    if(NOT EXISTS cmake/${FNAME})
+      set(FNAME ${CMAKE_CURRENT_LIST_DIR}/${FNAME})
     else()
-      set(FNAME "cmake/${FNAME}")
+      set(FNAME cmake/${FNAME})
     endif()
     configure_file(${FNAME} ${PROJECT_BINARY_DIR}/CTestConfig.cmake @ONLY)
   elseif(${PROJECT_NAME}_RUN_UTEST)
@@ -70,12 +70,12 @@ if(${PROJECT_NAME}_BLD_UTEST AND ${PROJECT_NAME}_COVERAGE)
     set(LCOV_ARGS $ENV{LCOV_ARGS})
     
     if(NOT VERBOSE)
-      list(APPEND LCOV_ARGS "--quiet")
+      list(APPEND LCOV_ARGS --quiet)
     endif()
     
-    #list(APPEND LCOV_ARGS "--debug")
-    #list(APPEND LCOV_ARGS "--rc lcov_branch_coverage=1")
-    #list(APPEND LCOV_ARGS "--rc lcov_function_coverage=1")
+    #list(APPEND LCOV_ARGS --debug)
+    #list(APPEND LCOV_ARGS --rc lcov_branch_coverage=1)
+    #list(APPEND LCOV_ARGS --rc lcov_function_coverage=1)
 
     if(VERBOSE)
       message(STATUS "Found GCOV front-end: ${LCOV} ${LCOV_ARGS}")
@@ -86,7 +86,7 @@ if(${PROJECT_NAME}_BLD_UTEST AND ${PROJECT_NAME}_COVERAGE)
     separate_arguments(${PROJECT_NAME}_COVERAGE_EXCLUDE)
     separate_arguments(${PROJECT_NAME}_COVERAGE_INCLUDE)
 
-    set(CAPTURE_FNAME "coverage.info")
+    set(CAPTURE_FNAME coverage.info)
 
     #add_custom_command(TARGET test_coverage_zero POST_BUILD
     #  COMMAND ${LCOV} ${LCOV_ARGS} --zerocounters --directory .
@@ -94,7 +94,7 @@ if(${PROJECT_NAME}_BLD_UTEST AND ${PROJECT_NAME}_COVERAGE)
     #  COMMENT "Cleaning coverage data"
     #  WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
-    list(APPEND LCOV_ARGS "--output-file ${CAPTURE_FNAME}")
+    list(APPEND LCOV_ARGS --output-file ${CAPTURE_FNAME})
     separate_arguments(LCOV_ARGS)
 
     add_custom_command(TARGET test_coverage_collect POST_BUILD

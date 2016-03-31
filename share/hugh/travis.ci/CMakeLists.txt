@@ -9,7 +9,7 @@
 cma_print_current_directory()
 
 set(SRC_SCRIPTS)
-list(APPEND SRC_SCRIPTS "fetch-or-update-git-repo.sh")
+list(APPEND SRC_SCRIPTS fetch-or-update-git-repo.sh)
 
 install(PROGRAMS ${SRC_SCRIPTS}
         DESTINATION ${${PROJECT_NAME}_SHARE_DIRECTORY}/hugh/travis.ci

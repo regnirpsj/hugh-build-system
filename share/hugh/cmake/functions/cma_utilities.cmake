@@ -69,6 +69,6 @@ function(cma_add_winrt_props NAME)
   # VS_DEPLOYMENT_CONTENT
   # VS_DEPLOYMENT_LOCATION
   
-  add_definitions("-ZW")
-  add_definitions("-EHsc")
+  add_definitions(-ZW)
+  add_definitions(-EHsc)
 endfunction()

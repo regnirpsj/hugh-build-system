@@ -45,34 +45,34 @@ function(cma_fxc_compile FXC_RESULT FXC_TYPE FXC_ENTRY)
 
   set(FXC_FLAGS)
 
-  list(APPEND FXC_FLAGS "/nologo")           # suppress copyright message
-  list(APPEND FXC_FLAGS "/Cc")               # output color coded assembly listings
-  list(APPEND FXC_FLAGS "/Ges")              # enable strict mode
-  list(APPEND FXC_FLAGS "/Gis")              # force IEEE strictness
-  list(APPEND FXC_FLAGS "/T${FXC_TYPE}_5_0") # target profile
-  list(APPEND FXC_FLAGS "/Zpc")              # pack matrices in column-major order
+  list(APPEND FXC_FLAGS /nologo)           # suppress copyright message
+  list(APPEND FXC_FLAGS /Cc)               # output color coded assembly listings
+  list(APPEND FXC_FLAGS /Ges)              # enable strict mode
+  list(APPEND FXC_FLAGS /Gis)              # force IEEE strictness
+  list(APPEND FXC_FLAGS /T${FXC_TYPE}_5_0) # target profile
+  list(APPEND FXC_FLAGS /Zpc)              # pack matrices in column-major order
 
   if("Release" STREQUAL "${CMAKE_BUILD_TYPE}")
-    list(APPEND FXC_FLAGS "/O3")             # optimization level 0..3. 1 is default
-    list(APPEND FXC_FLAGS "/Qstrip_debug")   # strip debug information from 4_0+ shader bytecode
-    list(APPEND FXC_FLAGS "/Qstrip_priv")    # strip private data from 4_0+ shader bytecode
+    list(APPEND FXC_FLAGS /O3)             # optimization level 0..3. 1 is default
+    list(APPEND FXC_FLAGS /Qstrip_debug)   # strip debug information from 4_0+ shader bytecode
+    list(APPEND FXC_FLAGS /Qstrip_priv)    # strip private data from 4_0+ shader bytecode
   else()
-    list(APPEND FXC_FLAGS "/O2")             # optimization level 0..3. 1 is default
-    list(APPEND FXC_FLAGS "/Zi")             # enable debugging information
+    list(APPEND FXC_FLAGS /O2)             # optimization level 0..3. 1 is default
+    list(APPEND FXC_FLAGS /Zi)             # enable debugging information
 
     if("DEBUG" STREQUAL "${CMAKE_BUILD_TYPE}")
-      list(APPEND FXC_FLAGS "/D_DEBUG=1")
-      list(APPEND FXC_FLAGS "/DDEBUG=1")
+      list(APPEND FXC_FLAGS /D_DEBUG=1)
+      list(APPEND FXC_FLAGS /DDEBUG=1)
     endif()
   endif()
 
   if(FXC_DEBUG)
-    list(APPEND FXC_FLAGS "/Vi") # display details about the include process
+    list(APPEND FXC_FLAGS /Vi) # display details about the include process
   endif()
 
   foreach(path ${FXC_INCLUDES})
     if(NOT "" STREQUAL "${path}")
-      list(APPEND FXC_FLAGS "/I${path}")
+      list(APPEND FXC_FLAGS /I${path})
     endif()
   endforeach()  
 
@@ -102,17 +102,17 @@ function(cma_fxc_compile FXC_RESULT FXC_TYPE FXC_ENTRY)
     get_filename_component(src_abs ${file} ABSOLUTE)
     get_filename_component(dst     ${file} NAME_WE)
     
-    set(dst_name "${dst}_${FXC_TYPE}_${FXC_ENTRY}")
-    set(dst_file "${dst_name}.inc")
+    set(dst_name ${dst}_${FXC_TYPE}_${FXC_ENTRY})
+    set(dst_file ${dst_name}.inc)
     
     if(NOT "" STREQUAL "${path}")
-      set(dst_file "${path}/${dst_file}")
+      set(dst_file ${path}/${dst_file})
     endif()
 
-    list(APPEND ${FXC_RESULT} "${CMAKE_CURRENT_BINARY_DIR}/${dst_file}")
+    list(APPEND ${FXC_RESULT} ${CMAKE_CURRENT_BINARY_DIR}/${dst_file})
     
     add_custom_command(
-      OUTPUT          "${CMAKE_CURRENT_BINARY_DIR}/${dst_file}"
+      OUTPUT           ${CMAKE_CURRENT_BINARY_DIR}/${dst_file}
       COMMAND          ${FXC}
       ARGS             ${FXC_FLAGS} /E${FXC_ENTRY} /Vn${dst_name} /Fh${dst_file} ${src_abs}
       MAIN_DEPENDENCY  ${src_abs}

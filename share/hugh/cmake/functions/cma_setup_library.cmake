@@ -35,16 +35,16 @@ function(cma_setup_library LIB_NAME)
   set(LIB_INCDIR_INSTALL ${LIB_INCDIR})
 
   if(NOT LIB_INCDIR)
-    set(LIB_INCDIR "${PROJECT_SOURCE_DIR}/inc")
+    set(LIB_INCDIR ${PROJECT_SOURCE_DIR}/inc)
     
     if(LIB_PREFIX)
-      set(LIB_INCDIR "${LIB_INCDIR}/${LIB_PREFIX}")
+      set(LIB_INCDIR ${LIB_INCDIR}/${LIB_PREFIX})
     endif()
 
-    set(LIB_INCDIR "${LIB_INCDIR}/${LIB_NAME}")
+    set(LIB_INCDIR ${LIB_INCDIR}/${LIB_NAME})
   else()
     if(NOT IS_ABSOLUTE ${LIB_INCDIR})
-      set(LIB_INCDIR "${PROJECT_SOURCE_DIR}/inc/${LIB_INCDIR}")
+      set(LIB_INCDIR ${PROJECT_SOURCE_DIR}/inc/${LIB_INCDIR})
     endif()
   endif()
 
@@ -102,7 +102,7 @@ function(cma_setup_library LIB_NAME)
               COMPONENT           ${${PROJECT_NAME}_LIB_COMPONENT_NAME})
     endif()
 
-    if(EXISTS "${LIB_INCDIR}" AND IS_DIRECTORY "${LIB_INCDIR}")
+    if(EXISTS ${LIB_INCDIR} AND IS_DIRECTORY ${LIB_INCDIR})
       install(DIRECTORY   ${LIB_INCDIR}/
         DESTINATION ${${PROJECT_NAME}_HEADER_DIRECTORY}/${LIB_INCDIR_INSTALL}
         COMPONENT   ${${PROJECT_NAME}_HDR_COMPONENT_NAME}

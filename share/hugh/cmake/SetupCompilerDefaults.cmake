@@ -21,3 +21,8 @@ else()
   string(TOLOWER ${CMAKE_CXX_COMPILER_ID} FNAME)
   include(compiler/${FNAME})
 endif()
+
+if(NOT VERBOSE)
+  # disable "Performing Test VARIABLE" message from 'Check*Source*.cmake'
+  set(CMAKE_REQUIRED_QUIET ON)
+endif()

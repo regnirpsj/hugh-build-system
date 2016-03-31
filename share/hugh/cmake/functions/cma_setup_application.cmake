@@ -31,16 +31,16 @@ function(cma_setup_application APP_NAME)
     return()
   endif()
 
-  file(GLOB_RECURSE HDRS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/*.hpp")
+  file(GLOB_RECURSE HDRS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp)
   list(APPEND APP_SOURCES ${INLS})
-  file(GLOB_RECURSE INLS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/*.inl")
+  file(GLOB_RECURSE INLS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/*.inl)
   list(APPEND APP_SOURCES ${HDRS})
   
   if(NOT APP_PREFIX)
-    set(APP_PREFIX "app_")
+    set(APP_PREFIX app_)
   endif()
 
-  set(APP_NAME "${APP_PREFIX}${APP_NAME}")
+  set(APP_NAME ${APP_PREFIX}${APP_NAME})
 
   if(APP_DEBUG OR VERBOSE)
     message(STATUS "cma_setup_application(${NAME};${ARGN}) variable setup:\n"

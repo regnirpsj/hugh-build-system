@@ -40,20 +40,25 @@ elseif(HUGH_INSTALL_PREFIX)
 endif()
 
 set(_hugh_HEADER_SEARCH_DIRS
-    "/usr/include"
-    "/usr/local/include"
-    "${HUGH_ROOT_DIR}/include")
+  /usr/include
+  /usr/local/include
+  ${HUGH_ROOT_DIR}/include
+  )
 
 set(_hugh_LIBRARY_SEARCH_DIRS
-    "/usr/lib"
-    "/usr/local/include"
-    "${HUGH_ROOT_DIR}/lib")
+  /usr/lib
+  /usr/local/include
+  ${HUGH_ROOT_DIR}/lib
+  )
 
 find_path(HUGH_INCLUDE_DIRS
-          NAMES "hugh/support.hpp"
+          NAMES hugh/support.hpp
           HINTS ${_hugh_HEADER_SEARCH_DIRS}
           DOC   "The directory where <hugh/support.hpp> resides")
-list(REMOVE_DUPLICATES HUGH_INCLUDE_DIRS)
+
+if(HUGH_INCLUDE_DIRS)
+  list(REMOVE_DUPLICATES HUGH_INCLUDE_DIRS)
+endif()
 
 foreach(lib ${HUGH_FIND_COMPONENTS})
   find_library(HUGH_${lib}_LIBRARY
@@ -62,7 +67,10 @@ foreach(lib ${HUGH_FIND_COMPONENTS})
                DOC   "The HUGH ${lib} library")
   list(APPEND HUGH_LIBRARIES ${HUGH_${lib}_LIBRARY})
 endforeach()
-list(REMOVE_DUPLICATES HUGH_LIBRARIES)
+
+if(HUGH_LIBRARIES)
+  list(REMOVE_DUPLICATES HUGH_LIBRARIES)
+endif()
 
 include(FindPackageHandleStandardArgs)
 
@@ -74,6 +82,5 @@ if(HUGH_FOUND AND VERBOSE)
   message(STATUS "HUGH setup:\n"
     "   HUGH_ROOT_DIR     = ${HUGH_ROOT_DIR}\n"
     "   HUGH_INCLUDE_DIRS = ${HUGH_INCLUDE_DIRS}\n"
-    "   HUGH_LIBRARIES    = ${HUGH_LIBRARIES}"
-    )
+    "   HUGH_LIBRARIES    = ${HUGH_LIBRARIES}")
 endif()
