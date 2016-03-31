@@ -27,6 +27,7 @@ include(SetupProjectDefaults)
 include(SetupUnitTests)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/inc)
+include_directories(${PROJECT_BINARY_DIR}/exports)
 
 add_subdirectory(src)
 

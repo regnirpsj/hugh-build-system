@@ -22,7 +22,7 @@
 
 // includes, project
 
-//#include <>
+#include <hugh/dummy/export.h>
 
 namespace hugh {
 
@@ -30,6 +30,8 @@ namespace hugh {
     
     // types, exported (class, enum, struct, union, typedef)
 
+    class HUGH_DUMMY_EXPORT dummy_class { /* to be filled later */ };
+    
     // variables, exported (extern)
 
     // functions, inlined (inline)
