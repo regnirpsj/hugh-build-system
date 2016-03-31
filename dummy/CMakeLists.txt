@@ -8,11 +8,10 @@
 
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 
-project(HUGH_BUILD_SYSTEM VERSION 0.1.0)
-
-add_subdirectory(dummy)
+project(HUGH_DUMMY VERSION 1.0.0)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/share/hugh/cmake)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 include(CheckOutOfTreeBuild)
 include(SetupInitialCache)
@@ -27,7 +26,9 @@ include(SetupCompilerDefaults)
 include(SetupProjectDefaults)
 include(SetupUnitTests)
 
-add_subdirectory(share)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/inc)
+
+add_subdirectory(src)
 
 include(ShowConfigSummary)
 # keep last
