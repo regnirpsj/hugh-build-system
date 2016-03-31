@@ -72,3 +72,40 @@ function(cma_add_winrt_props NAME)
   add_definitions(-ZW)
   add_definitions(-EHsc)
 endfunction()
+
+# .rst
+# cma_fetch_url(URL FILE)::
+#   URL    - url to fetch
+#   FILE   - file to safe to
+#   ALWAYS - always fetch, do not check if already available
+#
+function(cma_fetch_url URL FILE)
+  include(CMakeParseArguments)
+
+  set(OARGS ALWAYS)
+  set(SARGS)
+  set(MARGS)
+  cmake_parse_arguments(CMA_FETCH_URL "${OARGS}" "${SARGS}" "${MARGS}" ${ARGN})
+
+  set(SRC ${URL})
+  set(DST ${FILE})
+
+  if(CMA_FETCH_URL_ALWAYS OR NOT EXISTS ${DST})
+    if(VERBOSE)
+      message(STATUS "Downloding '${SRC}' to '${DST}'")
+    else()
+      message(STATUS "Downloding '${SRC}'")
+    endif()
+    file(DOWNLOAD ${SRC} ${DST} STATUS RESULT)
+    list(GET RESULT 0 RESULT0)
+    if(NOT 0 EQUAL ${RESULT0})
+      list(GET RESULT 1 RESULT1) 
+      message(FATAL_ERROR "Download failed: ${RESULT1} (${RESULT0})")
+      file(REMOVE ${DST})
+    else()
+      if(VERBOSE)
+	message(STATUS "Downloaded '${SRC}' to '${DST}'")
+      endif()
+    endif()
+  endif()
+endfunction()
