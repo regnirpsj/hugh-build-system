@@ -14,7 +14,7 @@
 
 // includes, system
 
-// #include <>
+#include <memory> // std::unique_ptr<>
 
 // includes, project
 
@@ -35,7 +35,11 @@ namespace {
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
-BOOST_AUTO_TEST_CASE(test_hugh_dummy_dummy)
+BOOST_AUTO_TEST_CASE(test_hugh_dummy_dummy_class_ctor)
 {
-  BOOST_CHECK(true);
+  using hugh::dummy::dummy_class;
+  
+  std::unique_ptr<dummy_class> const dc(new dummy_class);
+  
+  BOOST_CHECK(nullptr != dc);
 }
