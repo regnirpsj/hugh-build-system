@@ -7,19 +7,21 @@
 ####################################################################################################
 
 # .rst:
-# cma_setup_application(NAME SOURCES .. [DEPENDENCIES ..] [PREFIX <string>] [WINRT] [DEBUG])
+# cma_setup_application(NAME SOURCES .. [DEPENDENCIES ..] [PREFIX <string>] [WINRT] [NOINSTALL]
+#                       [DEBUG])
 #   NAME         -
 #   SOURCES      -
 #   DEPENDENCIES -
 #   PREFIX       -
 #   WINRT        -
+#   NOINSTALL    - 
 #   DEBUG        -
 #
 function(cma_setup_application APP_NAME)
   include(CMakeParseArguments)
   include(functions/cma_utilities)
   
-  set(OARGS WINRT DEBUG)
+  set(OARGS WINRT NOINSTALL DEBUG)
   set(SARGS PREFIX)
   set(MARGS SOURCES DEPENDENCIES)
   cmake_parse_arguments(APP "${OARGS}" "${SARGS}" "${MARGS}" ${ARGN})
@@ -44,8 +46,7 @@ function(cma_setup_application APP_NAME)
     message(STATUS "cma_setup_application(${NAME};${ARGN}) variable setup:\n"
       "   APP_NAME         = ${APP_NAME}\n"
       "   APP_SOURCES      = ${APP_SOURCES}\n"
-      "   APP_DEPENDENCIES = ${APP_DEPENDENCIES}"
-      )
+      "   APP_DEPENDENCIES = ${APP_DEPENDENCIES}")
   endif()
   
   add_executable(${APP_NAME} ${APP_SOURCES})
@@ -61,10 +62,12 @@ function(cma_setup_application APP_NAME)
   
   target_link_libraries(${APP_NAME} ${APP_DEPENDENCIES})
 
-  install(TARGETS ${APP_NAME}
-          RUNTIME
-          DESTINATION ${${PROJECT_NAME}_RUNTIME_DIRECTORY}
-	  COMPONENT   ${${PROJECT_NAME}_APP_COMPONENT_NAME})
+  if(NOT APP_NOINSTALL)
+    install(TARGETS ${APP_NAME}
+            RUNTIME
+            DESTINATION ${${PROJECT_NAME}_RUNTIME_DIRECTORY}
+	    COMPONENT   ${${PROJECT_NAME}_APP_COMPONENT_NAME})
+  endif()
 
   cma_add_target_to_list(${APP_NAME} CMAKE_TARGET_LIST)
 endfunction()

@@ -8,20 +8,21 @@
 
 # .rst:
 # cma_setup_library(NAME SOURCES .. [DEPENDENCIES ..] [INCDIR <string>] [PREFIX <string>] [WINRT]
-#                   [DEBUG])
+#                   [NOINSTALL] [DEBUG])
 #   NAME         -
 #   SOURCES      -
 #   DEPENDENCIES -
 #   INCDIR       -
 #   PREFIX       -
 #   WINRT        -
+#   NOINSTALL    - 
 #   DEBUG        -
 #
 function(cma_setup_library LIB_NAME)
   include(CMakeParseArguments)
   include(functions/cma_utilities)
   
-  set(OARGS WINRT DEBUG)
+  set(OARGS WINRT NOINSTALL DEBUG)
   set(SARGS INCDIR PREFIX)
   set(MARGS SOURCES DEPENDENCIES)
   cmake_parse_arguments(LIB "${OARGS}" "${SARGS}" "${MARGS}" ${ARGN})
@@ -87,27 +88,29 @@ function(cma_setup_library LIB_NAME)
 
   target_link_libraries(${LIB_NAME} ${LIB_DEPENDENCIES})
 
-  # 1. ARCHIVE|LIBRARY not pre-processed -> cannot be held in variable
-  # 2. shared libs ARCHIVE section is for import lib files from .dlls
-  if("SHARED" STREQUAL "${CMAKE_LIBRARY_TYPE}")    
-    install(TARGETS             ${LIB_NAME}
-            ARCHIVE DESTINATION ${${PROJECT_NAME}_LIBRARY_DIRECTORY}
-            LIBRARY DESTINATION ${${PROJECT_NAME}_LIBRARY_DIRECTORY}
-            COMPONENT           ${${PROJECT_NAME}_LIB_COMPONENT_NAME})
-  else()
-    install(TARGETS             ${LIB_NAME}
-            ARCHIVE DESTINATION ${${PROJECT_NAME}_ARCHIVE_DIRECTORY}
-            COMPONENT           ${${PROJECT_NAME}_LIB_COMPONENT_NAME})
+  if(NOT LIB_NOINSTALL)
+    # 1. ARCHIVE|LIBRARY not pre-processed -> cannot be held in variable
+    # 2. shared libs ARCHIVE section is for import lib files from .dlls
+    if("SHARED" STREQUAL "${CMAKE_LIBRARY_TYPE}")    
+      install(TARGETS             ${LIB_NAME}
+              ARCHIVE DESTINATION ${${PROJECT_NAME}_LIBRARY_DIRECTORY}
+              LIBRARY DESTINATION ${${PROJECT_NAME}_LIBRARY_DIRECTORY}
+              COMPONENT           ${${PROJECT_NAME}_LIB_COMPONENT_NAME})
+    else()
+      install(TARGETS             ${LIB_NAME}
+              ARCHIVE DESTINATION ${${PROJECT_NAME}_ARCHIVE_DIRECTORY}
+              COMPONENT           ${${PROJECT_NAME}_LIB_COMPONENT_NAME})
+    endif()
+
+    if(EXISTS "${LIB_INCDIR}" AND IS_DIRECTORY "${LIB_INCDIR}")
+      install(DIRECTORY   ${LIB_INCDIR}/
+        DESTINATION ${${PROJECT_NAME}_HEADER_DIRECTORY}/${LIB_INCDIR_INSTALL}
+        COMPONENT   ${${PROJECT_NAME}_HDR_COMPONENT_NAME}
+        PATTERN "*~" EXCLUDE)
+    endif()
   endif()
   
-  if(EXISTS "${LIB_INCDIR}" AND IS_DIRECTORY "${LIB_INCDIR}")
-    install(DIRECTORY   ${LIB_INCDIR}/
-            DESTINATION ${${PROJECT_NAME}_HEADER_DIRECTORY}/${LIB_INCDIR_INSTALL}
-            COMPONENT   ${${PROJECT_NAME}_HDR_COMPONENT_NAME}
-            PATTERN "*~" EXCLUDE)
-  endif()
-
-  if (TOPLVLHDR)
+  if(NOT NOINSTALL AND TOPLVLHDR)
     install(FILES       ${TOPLVLHDR}
             DESTINATION ${${PROJECT_NAME}_HEADER_DIRECTORY}/${LIB_INCDIR_INSTALL}/..
             COMPONENT   ${${PROJECT_NAME}_HDR_COMPONENT_NAME})
@@ -115,9 +118,11 @@ function(cma_setup_library LIB_NAME)
 
   if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/version.hpp.in)
     configure_file(version.hpp.in version.hpp @ONLY)
-    install(FILES       ${CMAKE_CURRENT_BINARY_DIR}/version.hpp
-            DESTINATION ${${PROJECT_NAME}_HEADER_DIRECTORY}/${LIB_INCDIR_INSTALL}
-            COMPONENT   ${${PROJECT_NAME}_HDR_COMPONENT_NAME})
+    if(NOT LIB_NOINSTALL)
+      install(FILES       ${CMAKE_CURRENT_BINARY_DIR}/version.hpp
+              DESTINATION ${${PROJECT_NAME}_HEADER_DIRECTORY}/${LIB_INCDIR_INSTALL}
+              COMPONENT   ${${PROJECT_NAME}_HDR_COMPONENT_NAME})
+    endif()
   endif()
 
   cma_add_target_to_list(${LIB_NAME} CMAKE_TARGET_LIST)

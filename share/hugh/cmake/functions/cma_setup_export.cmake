@@ -7,12 +7,13 @@
 ####################################################################################################
 
 # .rst:
-# cma_setup_export(NAME [FILE <string>] [PATH <string>] [PREFIX <string>] [DEBUG])
-#   NAME   -
-#   FILE   - file name
-#   PATH   - relative install path
-#   PREFIX - 
-#   DEBUG  -
+# cma_setup_export(NAME [FILE <string>] [PATH <string>] [PREFIX <string>] [NOINSTALL] [DEBUG])
+#   NAME      -
+#   FILE      - file name
+#   PATH      - relative install path
+#   PREFIX    - 
+#   NOINSTALL - 
+#   DEBUG     -
 #
 # see also [http://www.cmake.org/Wiki/BuildingWinDLL]
 #
@@ -20,7 +21,7 @@ function(cma_setup_export EXP_TARGET)
   include(CMakeParseArguments)
   include(GenerateExportHeader)
 
-  set(OARGS DEBUG)
+  set(OARGS NOINSTALL DEBUG)
   set(SARGS FILE PATH PREFIX)
   SET(MARGS)
   cmake_parse_arguments(EXP "${OARGS}" "${SARGS}" "${MARGS}" ${ARGN})
@@ -49,7 +50,9 @@ function(cma_setup_export EXP_TARGET)
   
   generate_export_header(${EXP_TARGET} EXPORT_FILE_NAME ${EXP_FILE} PREFIX_NAME ${EXP_PREFIX})
 
-  install(FILES ${EXP_FILE}
-          DESTINATION ${${PROJECT_NAME}_HEADER_DIRECTORY}/${EXP_PATH}
-	  COMPONENT   ${${PROJECT_NAME}_HDR_COMPONENT_NAME})
+  if(NOT EXP_NOINSTALL)
+    install(FILES ${EXP_FILE}
+            DESTINATION ${${PROJECT_NAME}_HEADER_DIRECTORY}/${EXP_PATH}
+	    COMPONENT   ${${PROJECT_NAME}_HDR_COMPONENT_NAME})
+  endif()
 endfunction()
