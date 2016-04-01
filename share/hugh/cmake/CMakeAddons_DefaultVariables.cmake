@@ -22,7 +22,7 @@ else()
   set(Boost_FIND_QUIETLY ON)
 endif()
 
-# Cmake 'install'
+# CMake 'install'
 if(VERBOSE)
   set(CMAKE_INSTALL_MESSAGE ALWAYS)
 else()
