@@ -6,5 +6,11 @@
 #                                                                                                  #
 ####################################################################################################
 
-add_subdirectory(doc)
-add_subdirectory(hugh)
+cma_print_current_directory()
+
+set(SRC)
+list(APPEND SRC index.html)
+
+install(FILES ${SRC}
+        DESTINATION ${${PROJECT_NAME}_SHARE_DIRECTORY}/doc/hugh/
+	COMPONENT   ${${PROJECT_NAME}_HDR_COMPONENT_NAME})
