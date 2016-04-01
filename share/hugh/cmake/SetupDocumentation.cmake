@@ -46,7 +46,7 @@ if(DOXYGEN_FOUND AND ${PROJECT_NAME}_DOC_DEV)
     COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_CFG_FILE}
     SOURCES ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_CFG_FILE}
             ${CMAKE_CURRENT_BINARY_DIR}/${CFG_FILE_NAME}
-    COMMENT "Buidling developer documentation")
+    COMMENT "Building developer documentation")
 
   # build before install
   install(CODE "execute_process(COMMAND \"${CMAKE_COMMAND}\" --build . --target devdoc)")
@@ -85,7 +85,7 @@ if(DOXYGEN_FOUND AND ${PROJECT_NAME}_DOC_USR)
     COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_CFG_FILE}
     SOURCES ${CMAKE_CURRENT_BINARY_DIR}/${${PROJECT_NAME}_CFG_FILE}
             ${CMAKE_CURRENT_BINARY_DIR}/${CFG_FILE_NAME}
-    COMMENT "Buidling user documentation")
+    COMMENT "Building user documentation")
 
   # build before install
   install(CODE "execute_process(COMMAND \"${CMAKE_COMMAND}\" --build . --target usrdoc)")
