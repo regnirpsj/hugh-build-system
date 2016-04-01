@@ -1,6 +1,7 @@
 # -*- Mode:Doxygen -*-
 
 QUIET                   = YES
+WARN_LOGFILE            = @CMAKE_CURRENT_BINARY_DIR@/doxygen.log
 
 STRIP_FROM_PATH        += @CMAKE_SOURCE_DIR@/inc
 STRIP_FROM_PATH        += @CMAKE_SOURCE_DIR@/src

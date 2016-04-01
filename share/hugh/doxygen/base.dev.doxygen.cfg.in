@@ -2,6 +2,8 @@
 
 @INCLUDE          = @CMAKE_CURRENT_BINARY_DIR@/common.doxygen.cfg
 
+WARN_LOGFILE      = @CMAKE_CURRENT_BINARY_DIR@/doxygen.dev.log
+
 PROJECT_NAME      = "@CMAKE_PROJECT_NAME@ Developer"
 OUTPUT_DIRECTORY  = @CMAKE_CURRENT_BINARY_DIR@/dev
 
