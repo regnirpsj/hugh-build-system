@@ -1,0 +1,42 @@
+# -*- Mode:Doxygen -*-
+
+QUIET                   = YES
+
+STRIP_FROM_PATH        += @CMAKE_SOURCE_DIR@/inc
+STRIP_FROM_PATH        += @CMAKE_SOURCE_DIR@/src
+
+STRIP_FROM_INC_PATH    += @CMAKE_SOURCE_DIR@/inc
+# STRIP_FROM_INC_PATH    += @INCLUDE_DIRECTORIES@
+
+INPUT                  += @doxy_main_page@
+INPUT                  += @CMAKE_SOURCE_DIR@/inc
+INPUT                  += @CMAKE_SOURCE_DIR@/src
+EXCLUDE                += @CMAKE_SOURCE_DIR@/src/app
+EXCLUDE_PATTERNS       += */test/*
+EXCLUDE_SYMBOLS        += boost::*
+EXCLUDE_SYMBOLS        += std::*
+FILE_PATTERNS           = *.hpp *.inl *.cpp *.h *.c
+RECURSIVE               = YES
+USE_MDFILE_AS_MAINPAGE  = @doxy_main_page@
+
+TAB_SIZE                = 2
+BUILTIN_STL_SUPPORT     = YES
+
+SOURCE_BROWSER          = YES
+
+HAVE_DOT                = @DOXYGEN_DOT_FOUND@
+DOT_GRAPH_MAX_NODES     = 150
+MAX_DOT_GRAPH_DEPTH     = 0
+DOT_TRANSPARENT         = YES
+DOT_MULTI_TARGETS       = YES
+DOT_FONTNAME            = DejaVu Sans Mono
+DOT_FONTSIZE            = 12
+DOT_IMAGE_FORMAT        = svg
+INTERACTIVE_SVG         = YES
+DOT_PATH                = @DOXYGEN_DOT_PATH@
+# MSCGEN_PATH
+
+TAGFILES               += "@CMAKE_CURRENT_BINARY_DIR@/cppreference-doxygen-web.tag.xml=http://en.cppreference.com/w/"
+
+GENERATE_HTML           = YES
+GENERATE_LATEX          = NO
