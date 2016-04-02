@@ -7,13 +7,14 @@
 ####################################################################################################
 
 # .rst:
-# cma_setup_library(NAME SOURCES .. [DEPENDENCIES ..] [INCDIR <string>] [PREFIX <string>] [WINRT]
-#                   [NOINSTALL] [DEBUG])
+# cma_setup_library(NAME SOURCES .. [DEPENDENCIES ..] [INCDIR <string>] [PREFIX <string>] [STATIC]
+#                   [WINRT] [NOINSTALL] [DEBUG])
 #   NAME         -
 #   SOURCES      -
 #   DEPENDENCIES -
 #   INCDIR       -
 #   PREFIX       -
+#   STATIC       -
 #   WINRT        -
 #   NOINSTALL    - 
 #   DEBUG        -
@@ -22,7 +23,7 @@ function(cma_setup_library LIB_NAME)
   include(CMakeParseArguments)
   include(functions/cma_utilities)
   
-  set(OARGS WINRT NOINSTALL DEBUG)
+  set(OARGS STATIC WINRT NOINSTALL DEBUG)
   set(SARGS INCDIR PREFIX)
   set(MARGS SOURCES DEPENDENCIES)
   cmake_parse_arguments(LIB "${OARGS}" "${SARGS}" "${MARGS}" ${ARGN})
@@ -74,7 +75,13 @@ function(cma_setup_library LIB_NAME)
       "   LIB_INCDIR_INSTALL = ${LIB_INCDIR_INSTALL}")
   endif()
   
-  add_library(${LIB_NAME} ${CMAKE_LIBRARY_TYPE} ${LIB_SOURCES})
+  set(LIB_TYPE ${CMAKE_LIBRARY_TYPE})
+
+  if(LIB_STATIC)
+    set(LIB_TYPE STATIC)
+  endif()
+
+  add_library(${LIB_NAME} ${LIB_TYPE} ${LIB_SOURCES})
 
   if(LIB_WINRT)
     cma_add_winrt_props(${LIB_NAME})
@@ -91,7 +98,7 @@ function(cma_setup_library LIB_NAME)
   if(NOT LIB_NOINSTALL)
     # 1. ARCHIVE|LIBRARY not pre-processed -> cannot be held in variable
     # 2. shared libs ARCHIVE section is for import lib files from .dlls
-    if("SHARED" STREQUAL "${CMAKE_LIBRARY_TYPE}")    
+    if("xSHARED" STREQUAL "x${LIB_TYPE}")    
       install(TARGETS             ${LIB_NAME}
               ARCHIVE DESTINATION ${${PROJECT_NAME}_LIBRARY_DIRECTORY}
               LIBRARY DESTINATION ${${PROJECT_NAME}_LIBRARY_DIRECTORY}
