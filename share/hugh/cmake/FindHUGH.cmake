@@ -65,7 +65,10 @@ foreach(lib ${HUGH_FIND_COMPONENTS})
                NAMES hugh_${lib}
                PATHS ${_hugh_LIBRARY_SEARCH_DIRS}
                DOC   "The HUGH ${lib} library")
-  list(APPEND HUGH_LIBRARIES ${HUGH_${lib}_LIBRARY})
+  if(HUGH_${lib}_LIBRARY)
+    list(APPEND HUGH_LIBRARIES ${HUGH_${lib}_LIBRARY})
+    set(HUGH_${lib}_FOUND TRUE)
+  endif()
 endforeach()
 
 if(HUGH_LIBRARIES)
@@ -76,7 +79,8 @@ include(FindPackageHandleStandardArgs)
 
 find_package_handle_standard_args(HUGH
                                   FOUND_VAR     HUGH_FOUND
-                                  REQUIRED_VARS HUGH_ROOT_DIR HUGH_INCLUDE_DIRS HUGH_LIBRARIES)
+                                  REQUIRED_VARS HUGH_ROOT_DIR HUGH_INCLUDE_DIRS HUGH_LIBRARIES
+				  HANDLE_COMPONENTS)
 
 if(HUGH_FOUND AND VERBOSE)
   message(STATUS "HUGH setup:\n"
