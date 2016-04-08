@@ -6,7 +6,7 @@
 #                                                                                                  #
 ####################################################################################################
 
-include(compiler/common-clang-gnu)
+include(${CMAKE_CURRENT_LIST_DIR}/common-clang-gnu.cmake)
 
 set(GLOBAL_COMPILER_FLAGS "${GLOBAL_COMPILER_FLAGS} -fdiagnostics-show-option")
 set(GLOBAL_COMPILER_FLAGS "${GLOBAL_COMPILER_FLAGS} -ferror-limit=5")

@@ -19,7 +19,7 @@ if(${PROJECT_NAME}_FILE_SC)
   endif()
 else()
   string(TOLOWER ${CMAKE_CXX_COMPILER_ID} FNAME)
-  include(compiler/${FNAME})
+  include(${CMAKE_CURRENT_LIST_DIR}/compiler/${FNAME}.cmake)
 endif()
 
 if(NOT VERBOSE)
