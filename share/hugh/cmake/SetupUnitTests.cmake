@@ -88,22 +88,25 @@ if(${PROJECT_NAME}_BLD_UTEST AND ${PROJECT_NAME}_COVERAGE)
 
     set(CAPTURE_FNAME coverage.info)
 
-    #add_custom_command(TARGET test_coverage_zero POST_BUILD
-    #  COMMAND ${LCOV} ${LCOV_ARGS} --zerocounters --directory .
-    #  COMMAND ${CMAKE_COMMAND} -E remove ${CAPTURE_FNAME}
-    #  COMMENT "Cleaning coverage data"
-    #  WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+    set(SCRIPT_BASE ${HUGH_INSTALL_PREFIX}/share/hugh/cmake/scripts)
+
+    add_custom_command(TARGET test_coverage_zero POST_BUILD
+      COMMAND           ${CMAKE_COMMAND} -P ${SCRIPT_BASE}/test_coverage_zero.cmake
+                                            \"${LCOV}\" \"${LCOV_ARGS}\"
+      COMMAND           ${CMAKE_COMMAND} -E remove ${CAPTURE_FNAME}
+      COMMENT           "Cleaning coverage data"
+      WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
     list(APPEND LCOV_ARGS --output-file ${CAPTURE_FNAME})
     separate_arguments(LCOV_ARGS)
-
+    
     add_custom_command(TARGET test_coverage_collect POST_BUILD
-      COMMAND ${LCOV}   ${LCOV_ARGS} --directory . --capture
-      COMMAND ${LCOV}   ${LCOV_ARGS} --extract ${CAPTURE_FNAME} ${${PROJECT_NAME}_COVERAGE_INCLUDE}
-      COMMAND ${LCOV}   ${LCOV_ARGS} --remove ${CAPTURE_FNAME} ${${PROJECT_NAME}_COVERAGE_EXCLUDE}
-      COMMAND ${LCOV}   ${LCOV_ARGS} --list ${CAPTURE_FNAME}
+      COMMAND           ${CMAKE_COMMAND} -P ${SCRIPT_BASE}/test_coverage_collect.cmake
+                                            \"${LCOV}\" \"${LCOV_ARGS}\" \"${CAPTURE_FNAME}\"
+					    \"${${PROJECT_NAME}_COVERAGE_INCLUDE}\"
+					    \"${${PROJECT_NAME}_COVERAGE_EXCLUDE}\"
       BYPRODUCTS        ${CAPTURE_FNAME}
-      COMMENT "Collecting coverage data"
+      COMMENT           "Collecting coverage data"
       WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
   endif()
 endif()

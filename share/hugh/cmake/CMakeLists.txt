@@ -51,6 +51,8 @@ list(APPEND SRC functions/cma_setup_file_target.cmake)
 list(APPEND SRC functions/cma_setup_library.cmake)
 list(APPEND SRC functions/cma_setup_test.cmake)
 list(APPEND SRC functions/cma_utilities.cmake)
+list(APPEND SRC scripts/test_coverage_collect.cmake)
+list(APPEND SRC scripts/test_coverage_zero.cmake)
 
 foreach(file ${SRC})
   get_filename_component(dir ${file} DIRECTORY)
@@ -58,3 +60,5 @@ foreach(file ${SRC})
           DESTINATION ${${PROJECT_NAME}_SHARE_DIRECTORY}/hugh/cmake/${dir}
 	  COMPONENT   ${${PROJECT_NAME}_HDR_COMPONENT_NAME})
 endforeach()
+
+
