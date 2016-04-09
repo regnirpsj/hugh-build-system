@@ -18,6 +18,6 @@ if(DEBUG)
   set(HUNTER_STATUS_DEBUG)
 endif()
 
-HunterGate(URL  "http://github.com/ruslo/hunter/archive/v0.14.1.tar.gz"
-           SHA1 "d073cc04d59a01782385799568afce78066a8cec")
-
+HunterGate(URL  "https://github.com/ruslo/hunter/archive/v0.14.1.tar.gz"
+           SHA1 "d073cc04d59a01782385799568afce78066a8cec"
+	   LOCAL)
