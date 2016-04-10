@@ -6,6 +6,8 @@
 #                                                                                                  #
 ####################################################################################################
 
+set(GLOBAL_COMPILER_FLAGS)
+set(GLOBAL_LINKER_FLAGS)
 set(CMAKE_LIBRARY_TYPE "STATIC")
 
 set(DISABLED_WARNINGS)
@@ -42,13 +44,10 @@ list(APPEND DISABLED_WARNINGS /wd4459)
 # unreachable code (somewhere in boost)
 list(APPEND DISABLED_WARNINGS /wd4702)
 
-set(GLOBAL_COMPILER_FLAGS)
 list(APPEND GLOBAL_COMPILER_FLAGS /W4)  # warn almost everything
 list(APPEND GLOBAL_COMPILER_FLAGS ${DISABLED_WARNINGS})
 list(APPEND GLOBAL_COMPILER_FLAGS /EHa) # exception-handling for asynchronous (structured) and
                                         # synchronous (C++) exceptions
-
-list(APPEND CMAKE_CXX_FLAGS ${GLOBAL_COMPILER_FLAGS})
 
 # avoid pulling all of windows.h
 add_definitions(-DWIN32_LEAN_AND_MEAN)

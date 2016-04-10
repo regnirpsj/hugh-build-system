@@ -22,7 +22,14 @@ else()
   include(${CMAKE_CURRENT_LIST_DIR}/compiler/${FNAME}.cmake)
 endif()
 
-string(REPLACE ";" " " CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+list(APPEND CMAKE_CXX_FLAGS           ${GLOBAL_COMPILER_FLAGS})
+list(APPEND CMAKE_SHARED_LINKER_FLAGS ${GLOBAL_LINKER_FLAGS})
+
+string(REPLACE ";" " " CMAKE_CXX_FLAGS           "${CMAKE_CXX_FLAGS}")
+string(REPLACE ";" " " CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS}")
+
+#cma_print_variable(CMAKE_CXX_FLAGS)
+#cma_print_variable(CMAKE_SHARED_LINKER_FLAGS)
 
 if(NOT VERBOSE)
   # disable "Performing Test VARIABLE" message from 'Check*Source*.cmake'
