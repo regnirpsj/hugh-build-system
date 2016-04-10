@@ -6,6 +6,9 @@
 #                                                                                                  #
 ####################################################################################################
 
+message(STATUS "Support for 'Hunter' currently disabled")
+return()
+
 include(${CMAKE_CURRENT_LIST_DIR}/HunterGate.cmake)
 
 option(HUNTER_ENABLED "Enable Hunter package manager" OFF)
