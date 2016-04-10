@@ -22,6 +22,8 @@ else()
   include(${CMAKE_CURRENT_LIST_DIR}/compiler/${FNAME}.cmake)
 endif()
 
+string(REPLACE ";" " " CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+
 if(NOT VERBOSE)
   # disable "Performing Test VARIABLE" message from 'Check*Source*.cmake'
   set(CMAKE_REQUIRED_QUIET ON)

@@ -48,9 +48,7 @@ list(APPEND GLOBAL_COMPILER_FLAGS ${DISABLED_WARNINGS})
 list(APPEND GLOBAL_COMPILER_FLAGS /EHa) # exception-handling for asynchronous (structured) and
                                         # synchronous (C++) exceptions
 
-separate_arguments(GLOBAL_COMPILER_FLAGS)
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GLOBAL_COMPILER_FLAGS}")
+list(APPEND CMAKE_CXX_FLAGS ${GLOBAL_COMPILER_FLAGS})
 
 # avoid pulling all of windows.h
 add_definitions(-DWIN32_LEAN_AND_MEAN)
