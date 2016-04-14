@@ -61,4 +61,3 @@ foreach(file ${SRC})
 	  COMPONENT   ${${PROJECT_NAME}_HDR_COMPONENT_NAME})
 endforeach()
 
-
