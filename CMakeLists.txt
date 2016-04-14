@@ -10,7 +10,7 @@ cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 
 include(${CMAKE_SOURCE_DIR}/share/hugh/cmake/SetupHunter.cmake)
 
-project(HUGH_BUILD_SYSTEM VERSION 0.1.0)
+project(HUGH_BUILD_SYSTEM VERSION 0.1.0 LANGUAGES NONE)
 
 add_subdirectory(dummy)
 
@@ -25,9 +25,9 @@ include(SetupFunctionsAndMacros)
 
 cma_print_current_directory()
 
-include(SetupCompilerDefaults)
+#include(SetupCompilerDefaults)
 include(SetupProjectDefaults)
-include(SetupUnitTests)
+#include(SetupUnitTests)
 
 add_subdirectory(share)
 
