@@ -18,11 +18,6 @@ if(${PROJECT_NAME}_COVERAGE)
   list(APPEND GLOBAL_LINKER_FLAGS --coverage)
 endif()
 
-if(${PROJECT_NAME}_PROFILE)
-  set(GLOBAL_COMPILER_FLAGS -pg)
-  list(APPEND GLOBAL_LINKER_FLAGS -pg)
-endif()
-
 # [http://stackoverflow.com/questions/17150075]
 list(APPEND GLOBAL_LINKER_FLAGS -Wl,--no-as-needed)
 
