@@ -44,6 +44,9 @@ list(APPEND DISABLED_WARNINGS /wd4459)
 # unreachable code (somewhere in boost)
 list(APPEND DISABLED_WARNINGS /wd4702)
 
+# C1128: number of sections exceeded object file format limit: compile with /bigobj
+list(APPEND DISABLED_WARNINGS /bigobj)
+
 list(APPEND GLOBAL_COMPILER_FLAGS /W4)  # warn almost everything
 list(APPEND GLOBAL_COMPILER_FLAGS ${DISABLED_WARNINGS})
 list(APPEND GLOBAL_COMPILER_FLAGS /EHa) # exception-handling for asynchronous (structured) and
