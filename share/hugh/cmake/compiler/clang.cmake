@@ -20,6 +20,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/common-clang-gnu.cmake)
 list(APPEND GLOBAL_COMPILER_FLAGS -fdiagnostics-show-option)
 list(APPEND GLOBAL_COMPILER_FLAGS -ferror-limit=5)
 list(APPEND GLOBAL_COMPILER_FLAGS -Wno-missing-braces)
+list(APPEND GLOBAL_COMPILER_FLAGS -ffp-contract=fast)
 
 if("Release" STREQUAL "${CMAKE_BUILD_TYPE}")
 else()
