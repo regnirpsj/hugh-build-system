@@ -62,8 +62,8 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" AND CMAKE_CXX_COMPILER_VERSION V
 
   cma_print_variable(Boost_VERSION)
 
-  if (Boost_VERSION VERSION_LESS 105060)
-    message(STATUS "Adding CLANG 3.4+/boost < 1.65 workaround")
+  if (Boost_VERSION VERSION_LESS 105600)
+    message(STATUS "Adding CLANG 3.4+/boost < 1.56 workaround")
     add_definitions(-DBOOST_HAS_INT128)
   endif()
 endif()
