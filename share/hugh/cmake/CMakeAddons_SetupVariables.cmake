@@ -57,7 +57,7 @@ endif()
 # [https://svn.boost.org/trac/boost/ticket/9610]
 cma_print_variable(CMAKE_CXX_COMPILER_ID)
 cma_print_variable(CMAKE_CXX_COMPILER_VERSION)
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "CLANG" AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 3.3)
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 3.3)
   find_package(Boost ${BOOST_MINIMUM_VERSION} QUIET)
 
   cma_print_variable(Boost_VERSION)
