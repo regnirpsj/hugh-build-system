@@ -72,6 +72,7 @@ if(DEFINED ENV{GLM_ROOT_DIR})
 endif()
 
 # GLM
+add_definitions(-DGLM_ENABLE_EXPERIMENTAL)
 # add_definitions(-DGLM_FORCE_CXX11)
 # add_definitions(-DGLM_FORCE_EXPLICIT_CTOR)
 add_definitions(-DGLM_FORCE_INLINE)
