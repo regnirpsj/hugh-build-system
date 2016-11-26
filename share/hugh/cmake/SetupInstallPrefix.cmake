@@ -7,7 +7,8 @@
 ####################################################################################################
 
 if(DEFINED ENV{HUGH_INSTALL_PREFIX})
-  set(HUGH_INSTALL_PREFIX $ENV{HUGH_INSTALL_PREFIX} CACHE INTERNAL "HUGH Installation Root" FORCE)
+  get_filename_component(dir $ENV{HUGH_INSTALL_PREFIX} ABSOLUTE BASE_DIR ${CMAKE_BINARY_DIR})
+  set(HUGH_INSTALL_PREFIX ${dir} CACHE INTERNAL "HUGH Installation Root" FORCE)
 endif()
 
 if(NOT HUGH_INSTALL_PREFIX)
