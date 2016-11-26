@@ -12,11 +12,16 @@ set(CMAKE_LIBRARY_TYPE "STATIC")
 
 set(DISABLED_WARNINGS)
 
+# temp disable for glm/gli
+list(APPEND DISABLED_WARNINGS /wd4100)
+list(APPEND DISABLED_WARNINGS /wd4310)
+list(APPEND DISABLED_WARNINGS /wd4458)
+
 # unknown pragma
 #list(APPEND DISABLED_WARNINGS /wd4068)
 
 # nonstandard extension used : nameless struct/union
-#list(APPEND DISABLED_WARNINGS /wd4201)
+list(APPEND DISABLED_WARNINGS /wd4201)
                                                       
 if("SHARED" STREQUAL "${CMAKE_LIBRARY_TYPE}")
   # 'identifier' : class 'type' needs to have dll-interface to be used by clients of class 'type2'
