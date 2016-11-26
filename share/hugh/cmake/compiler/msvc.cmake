@@ -8,31 +8,35 @@
 
 set(GLOBAL_COMPILER_FLAGS)
 set(GLOBAL_LINKER_FLAGS)
+
+# using 'SHARED' blocked by [https://connect.microsoft.com/VisualStudio/feedback/details/1403302]
+# [http://stackoverflow.com/questions/30765256]; agree w/ last comment: this is hell!
 set(CMAKE_LIBRARY_TYPE "STATIC")
 
 set(DISABLED_WARNINGS)
 
-# temp disable for glm/gli
-list(APPEND DISABLED_WARNINGS /wd4100)
-list(APPEND DISABLED_WARNINGS /wd4310)
-list(APPEND DISABLED_WARNINGS /wd4458)
-
 # unknown pragma
 #list(APPEND DISABLED_WARNINGS /wd4068)
+
+# 'variable': unreferenced formal parameter
+list(APPEND DISABLED_WARNINGS /wd4100)
 
 # nonstandard extension used : nameless struct/union
 list(APPEND DISABLED_WARNINGS /wd4201)
                                                       
-if("SHARED" STREQUAL "${CMAKE_LIBRARY_TYPE}")
+if("${CMAKE_LIBRARY_TYPE}" STREQUAL "SHARED")
   # 'identifier' : class 'type' needs to have dll-interface to be used by clients of class 'type2'
-  #list(APPEND DISABLED_WARNINGS /wd4251)
+  list(APPEND DISABLED_WARNINGS /wd4251)
 endif()
 
 # cast truncates constant value
-#list(APPEND DISABLED_WARNINGS /wd4310)
+list(APPEND DISABLED_WARNINGS /wd4310)
 
 # new behavior: elements of array '*' will be default initialized  
 #list(APPEND DISABLED_WARNINGS /wd4351)
+
+# declaration of 'type' hides class member
+list(APPEND DISABLED_WARNINGS /wd4458)
 
 # declaration of '*' hides global declaration
 list(APPEND DISABLED_WARNINGS /wd4459)
@@ -56,6 +60,10 @@ list(APPEND GLOBAL_COMPILER_FLAGS /W4)  # warn almost everything
 list(APPEND GLOBAL_COMPILER_FLAGS ${DISABLED_WARNINGS})
 list(APPEND GLOBAL_COMPILER_FLAGS /EHa) # exception-handling for asynchronous (structured) and
                                         # synchronous (C++) exceptions
+
+# [https://msdn.microsoft.com/en-us/library/6sehtctf.aspx?f=255&MSPPError=-2147217396]
+# [http://www.cplusplus.com/forum/general/25253/]
+add_definitions(-D_WIN32_WINNT=0x0601)
 
 # avoid pulling all of windows.h
 add_definitions(-DWIN32_LEAN_AND_MEAN)
