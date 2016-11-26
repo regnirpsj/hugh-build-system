@@ -10,7 +10,7 @@
 set(BOOST_MINIMUM_VERSION 1.55.0)
 
 if(CMAKE_HOST_WIN32)
-  foreach(version 1.60.0 1.59.0 1.57.0 1.55.0)
+  foreach(version 1.62.0 1.60.0 1.59.0 1.57.0 1.55.0)
     set(BOOST_ROOT C:/Tools/boost/${version})
     if(EXISTS "${BOOST_ROOT}" AND IS_DIRECTORY "${BOOST_ROOT}")
       break()
@@ -32,9 +32,6 @@ if(CMAKE_HOST_WIN32)
   set(Boost_DEBUG               FALSE)
   set(Boost_USE_STATIC_LIBS     ON)
   set(Boost_USE_MULTITHREAD     ON)
-
-  add_definitions(${Boost_LIB_DIAGNOSTIC_DEFINITIONS})
-  # add_definitions(-DBOOST_ALL_DYN_LINK)
   
   find_package(Boost ${BOOST_MINIMUM_VERSION})
   if(Boost_FOUND)
@@ -45,9 +42,13 @@ if(CMAKE_HOST_WIN32)
       set(CMAKE_EXE_LINKER_FLAGS    "${CMAKE_EXE_LINKER_FLAGS} /LIBPATH:${Boost_LIBRARY_DIRS}")
     endif()
   endif()
+
+  add_definitions(${Boost_LIB_DIAGNOSTIC_DEFINITIONS})
 elseif(CMAKE_HOST_UNIX)
   set(Boost_DEBUG           FALSE)
   set(Boost_USE_MULTITHREAD ON)
+
+  find_package(Boost ${BOOST_MINIMUM_VERSION})
 
   add_definitions(${Boost_LIB_DIAGNOSTIC_DEFINITIONS})
   add_definitions(-DBOOST_ALL_DYN_LINK)
@@ -55,9 +56,9 @@ endif()
 
 # [https://stackoverflow.com/questions/22476267]
 # [https://svn.boost.org/trac/boost/ticket/9610]
-cma_print_variable(CMAKE_CXX_COMPILER_ID)
-cma_print_variable(CMAKE_CXX_COMPILER_VERSION)
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 3.3)
+#cma_print_variable(CMAKE_CXX_COMPILER_ID)
+#cma_print_variable(CMAKE_CXX_COMPILER_VERSION)
+if ("x${CMAKE_CXX_COMPILER_ID}" STREQUAL "xClang" AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 3.3)
   find_package(Boost ${BOOST_MINIMUM_VERSION} QUIET)
 
   cma_print_variable(Boost_VERSION)
