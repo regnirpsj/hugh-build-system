@@ -43,14 +43,19 @@ if(CMAKE_HOST_WIN32)
     endif()
   endif()
 
-  add_definitions(${Boost_LIB_DIAGNOSTIC_DEFINITIONS})
+  if(VERBOSE)
+    add_definitions(${Boost_LIB_DIAGNOSTIC_DEFINITIONS})
+  endif()
 elseif(CMAKE_HOST_UNIX)
   set(Boost_DEBUG           FALSE)
   set(Boost_USE_MULTITHREAD ON)
 
   find_package(Boost ${BOOST_MINIMUM_VERSION})
 
-  add_definitions(${Boost_LIB_DIAGNOSTIC_DEFINITIONS})
+  if(VERBOSE)
+    add_definitions(${Boost_LIB_DIAGNOSTIC_DEFINITIONS})
+  endif()
+  
   add_definitions(-DBOOST_ALL_DYN_LINK)
 endif()
 
