@@ -34,9 +34,17 @@
 #                         variable.
 
 if(DEFINED ENV{HUGH_INSTALL_PREFIX})
-  set(HUGH_ROOT_DIR $ENV{HUGH_INSTALL_PREFIX})
+  get_filename_component(dir $ENV{HUGH_INSTALL_PREFIX} ABSOLUTE BASE_DIR ${CMAKE_BINARY_DIR})
+  set(HUGH_ROOT_DIR ${dir})
 elseif(HUGH_INSTALL_PREFIX)
-  set(HUGH_ROOT_DIR ${HUGH_INSTALL_PREFIX})
+  get_filename_component(dir ${HUGH_INSTALL_PREFIX} ABSOLUTE BASE_DIR ${CMAKE_BINARY_DIR})
+  set(HUGH_ROOT_DIR ${dir})
+endif()
+
+if(FALSE AND VERBOSE)
+  message(STATUS "ENV{HUGH_INSTALL_PREFIX} = $ENV{HUGH_INSTALL_PREFIX}")
+  message(STATUS "HUGH_INSTALL_PREFIX      = ${HUGH_INSTALL_PREFIX}")
+  message(STATUS "HUGH_ROOT_DIR            = ${HUGH_ROOT_DIR}")
 endif()
 
 set(_hugh_HEADER_SEARCH_DIRS
