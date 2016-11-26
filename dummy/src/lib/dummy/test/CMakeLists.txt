@@ -10,7 +10,7 @@ cma_print_current_directory()
 
 find_package(Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS unit_test_framework)
 
-include_directories(SYSTEM ${Boost_INLCUDE_DIR})
+include_directories(SYSTEM ${Boost_INCLUDE_DIR})
 
 set(SRC)
 list(APPEND SRC dummy.cpp)
