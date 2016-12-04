@@ -66,7 +66,7 @@ endif()
 if ("x${CMAKE_CXX_COMPILER_ID}" STREQUAL "xClang" AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 3.3)
   find_package(Boost ${BOOST_MINIMUM_VERSION} QUIET)
 
-  cma_print_variable(Boost_VERSION)
+  #cma_print_variable(Boost_VERSION)
 
   if (Boost_VERSION VERSION_LESS 105600)
     message(STATUS "Adding CLANG 3.4+/boost < 1.56 workaround")
