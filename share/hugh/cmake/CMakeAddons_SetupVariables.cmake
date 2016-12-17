@@ -105,6 +105,15 @@ add_definitions(-DGLM_FORCE_SWIZZLE)
 # add_definitions(-DGLM_PRECISION_HIGHP_FLOAT)
 # add_definitions(-DGLM_PRECISION_HIGHP_INT)
 
+# SDL2
+set(SDL_MINIMUM_VERSION "2.0.5")
+if(CMAKE_HOST_WIN32)
+  set(SDL_ROOT_DIR "C:/Tools/sdl2/${SDL_MINIMUM_VERSION}")
+endif()
+if(DEFINED ENV{SDL_ROOT_DIR})
+  set(SDL_ROOT_DIR $ENV{SDL_ROOT_DIR})
+endif()
+
 if(HUGH_TRACE_ALL OR ${PROJECT_NAME}_TRACE_ALL)
   if(VERBOSE)
     message(STATUS "Enabling run-time tracing for complete project!")
