@@ -22,7 +22,7 @@ set(DISABLED_WARNINGS)
 list(APPEND DISABLED_WARNINGS /wd4100)
 
 # nonstandard extension used : nameless struct/union
-#list(APPEND DISABLED_WARNINGS /wd4201)
+list(APPEND DISABLED_WARNINGS /wd4201)
                                                       
 if("${CMAKE_LIBRARY_TYPE}" STREQUAL "SHARED")
   # 'identifier' : class 'type' needs to have dll-interface to be used by clients of class 'type2'
@@ -59,10 +59,12 @@ list(APPEND DISABLED_WARNINGS /bigobj)
 # warning level + language extensions:
 # [https://github.com/g-truc/glm/pull/587#issuecomment-265731442]
 list(APPEND GLOBAL_COMPILER_FLAGS /W4)  # warn almost everything
-list(APPEND GLOBAL_COMPILER_FLAGS /Za)  # disable language extension
+#list(APPEND GLOBAL_COMPILER_FLAGS /Za)  # disable language extension
+                                        # errors in boost + windows kit 10.x
 list(APPEND GLOBAL_COMPILER_FLAGS ${DISABLED_WARNINGS})
 list(APPEND GLOBAL_COMPILER_FLAGS /EHa) # exception-handling for asynchronous (structured) and
                                         # synchronous (C++) exceptions
+list(APPEND GLOBAL_COMPILER_FLAGS /FS)  # force synchronous .PDB writes
 
 # [https://msdn.microsoft.com/en-us/library/6sehtctf.aspx?f=255&MSPPError=-2147217396]
 # [http://www.cplusplus.com/forum/general/25253/]
