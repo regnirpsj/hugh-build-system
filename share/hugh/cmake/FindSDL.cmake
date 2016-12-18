@@ -39,7 +39,9 @@
 
 set(_sdl_HEADER_SEARCH_DIRS
     "/usr/include"
-    "/usr/local/include")
+    "/usr/local/include"
+    "/usr/include/SDL2"
+    "/usr/local/include/SDL2")
 
 set(_sdl_HEADER_NAMES
     "SDL.h")
