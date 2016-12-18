@@ -106,9 +106,9 @@ add_definitions(-DGLM_FORCE_SWIZZLE)
 # add_definitions(-DGLM_PRECISION_HIGHP_INT)
 
 # SDL2
-set(SDL_MINIMUM_VERSION "2.0.5")
+set(SDL_MINIMUM_VERSION "2.0.4")
 if(CMAKE_HOST_WIN32)
-  set(SDL_ROOT_DIR "C:/Tools/sdl2/${SDL_MINIMUM_VERSION}")
+  set(SDL_ROOT_DIR "C:/Tools/sdl2/2.0.5")
 endif()
 if(DEFINED ENV{SDL_ROOT_DIR})
   set(SDL_ROOT_DIR $ENV{SDL_ROOT_DIR})
