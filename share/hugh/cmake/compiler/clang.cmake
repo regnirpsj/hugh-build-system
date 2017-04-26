@@ -2,14 +2,16 @@
 
 ####################################################################################################
 #                                                                                                  #
-# Copyright (C) 2016 University of Hull                                                            #
+# Copyright (C) 2016-2017 University of Hull                                                       #
 #                                                                                                  #
 ####################################################################################################
 
 set(GLOBAL_COMPILER_FLAGS)
 set(GLOBAL_LINKER_FLAGS)
 
-if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 3.0)
+if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 3.8)
+  list(APPEND GLOBAL_COMPILER_FLAGS -std=c++14)
+elseif(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 3.0)
   list(APPEND GLOBAL_COMPILER_FLAGS -std=c++11)
 else()
   list(APPEND GLOBAL_COMPILER_FLAGS -std=c++0x)
